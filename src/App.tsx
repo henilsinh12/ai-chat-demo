@@ -16,7 +16,7 @@ function App() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/chat",
+        "https://ai-chat-demo-zwns.onrender.com",   // ✅ PRODUCTION BACKEND URL
         { message }
       );
 
@@ -25,7 +25,10 @@ function App() {
       setChat([...updatedChat, { text: reply, sender: "ai" }]);
       setMessage("");
     } catch (error) {
-      setChat([...updatedChat, { text: "⚠️ Error connecting to AI", sender: "ai" }]);
+      setChat([
+        ...updatedChat,
+        { text: "⚠️ Error connecting to AI server", sender: "ai" },
+      ]);
     }
 
     setLoading(false);
@@ -69,11 +72,7 @@ function App() {
           {loading && (
             <div style={styles.messageWrapper}>
               <div style={{ ...styles.messageBubble, background: "#1f2937" }}>
-                <span className="typing">
-                  <span>.</span>
-                  <span>.</span>
-                  <span>.</span>
-                </span>
+                Typing...
               </div>
             </div>
           )}
@@ -94,25 +93,6 @@ function App() {
           </button>
         </div>
       </div>
-
-      <style>
-        {`
-          .typing span {
-            animation: blink 1.4s infinite both;
-          }
-          .typing span:nth-child(2) {
-            animation-delay: 0.2s;
-          }
-          .typing span:nth-child(3) {
-            animation-delay: 0.4s;
-          }
-          @keyframes blink {
-            0% { opacity: .2 }
-            20% { opacity: 1 }
-            100% { opacity: .2 }
-          }
-        `}
-      </style>
     </div>
   );
 }
